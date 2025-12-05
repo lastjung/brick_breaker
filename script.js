@@ -158,7 +158,12 @@ function launchBall() {
     if (ballOnPaddle && gameRunning) {
         ballOnPaddle = false;
         document.getElementById('startHint').style.display = 'none';
-        // SoundManager.init(); // Initialize audio context on user interaction - moved to startGame
+
+        // Ensure AudioContext is active on user interaction (fixes Autoplay Policy issues)
+        SoundManager.init();
+        if (SoundManager.audioCtx && SoundManager.audioCtx.state === 'suspended') {
+            SoundManager.audioCtx.resume();
+        }
 
         // Randomize start direction slightly
         ball.dx = ball.speed * (Math.random() > 0.5 ? 1 : -1);
