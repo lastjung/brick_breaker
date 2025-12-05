@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Brick Breaker</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="game-container">
+        <h1>Neon Brick Breaker</h1>
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="600" height="800"></canvas>
+            <div id="startHint" class="overlay" style="display: flex; background: rgba(0,0,0,0.4);">
+                <p style="font-size: 24px; color: #fff; text-shadow: 0 0 10px #0ff;">Click or Press Space to Start</p>
+            </div>
+            <div id="gameOverScreen" class="overlay" style="display: none;">
+                <h2>Game Over</h2>
+                <p>Final Score: <span id="finalScore">0</span></p>
+                <button id="restartBtn">Try Again</button>
+            </div>
+            <div id="victoryScreen" class="overlay" style="display: none;">
+                <h2>You Win!</h2>
+                <p>Score: <span id="victoryScore">0</span></p>
+                <button id="victoryRestartBtn">Play Again</button>
+            </div>
+        </div>
+        <div id="scoreBoard">
+            <div class="stat-item">Level: <input type="number" id="levelSelect" min="1" value="1"
+                    style="width: 50px; background: transparent; border: none; color: #fff; font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; text-align: center;">
+            </div>
+            <div class="stat-item">Score: <span id="score">0</span></div>
+            <div class="stat-item">Lives: <input type="number" id="livesSelect" min="1" value="3"
+                    style="width: 50px; background: transparent; border: none; color: #fff; font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; text-align: center;">
+            </div>
+        </div>
+        <div id="controls">
+            <div id="controls">
+                <div class="control-group">
+                    <label for="speedSlider">Ball Speed:</label>
+                    <input type="range" id="speedSlider" min="2" max="15" value="5" step="1">
+                    <span id="speedDisplay">5</span>
+                </div>
+
+                <div class="control-group">
+                    <label for="paddleSpeedSlider">Paddle Speed:</label>
+                    <input type="range" id="paddleSpeedSlider" min="10" max="30" value="15" step="1">
+                    <span id="paddleSpeedDisplay">15</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
