@@ -177,18 +177,44 @@ function keyUpHandler(e) {
 }
 
 function mouseMoveHandler(e) {
-    const rect = canvas.getBoundingClientRect();
-    const scaleX = canvas.width / rect.width;
-    // Calculate relative X based on the canvas rect, but using global clientX
-    // This works even if mouse is outside canvas, as long as we subtract canvas left
-    const relativeX = (e.clientX - rect.left) * scaleX;
+    if (document.pointerLockElement === canvas) {
+        // Pointer Lock Mode: Use relative movement
+        paddle.x += e.movementX;
+    } else {
+        // Standard Mode: Use absolute position
+        const rect = canvas.getBoundingClientRect();
+        const scaleX = canvas.width / rect.width;
+        const relativeX = (e.clientX - rect.left) * scaleX;
+        paddle.x = relativeX - paddle.width / 2;
+    }
 
-    paddle.x = relativeX - paddle.width / 2;
-
-    // Clamp paddle position
+    // Clamp paddle position (common for both modes)
     if (paddle.x < 0) paddle.x = 0;
     if (paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
 }
+
+// Pointer Lock Implementation
+const captureBtn = document.getElementById('captureBtn');
+
+captureBtn.addEventListener('click', () => {
+    if (!document.pointerLockElement) {
+        canvas.requestPointerLock();
+    } else {
+        document.exitPointerLock();
+    }
+});
+
+document.addEventListener('pointerlockchange', () => {
+    if (document.pointerLockElement === canvas) {
+        captureBtn.innerText = "Release Mouse";
+        captureBtn.style.background = "var(--primary-color)";
+        captureBtn.style.color = "#000";
+    } else {
+        captureBtn.innerText = "Capture Mouse";
+        captureBtn.style.background = ""; // Reset to default
+        captureBtn.style.color = "";
+    }
+});
 
 // Drawing functions
 function drawBall() {
