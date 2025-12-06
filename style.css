@@ -58,7 +58,43 @@ canvas {
     display: block;
     touch-action: none;
     /* Prevent browser zooming/scrolling */
+    max-width: 100%;
+    height: auto;
 }
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .game-container {
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    button {
+        padding: 10px 25px;
+        font-size: 16px;
+    }
+
+    .overlay h2 {
+        font-size: 40px;
+    }
+
+    .overlay p {
+        font-size: 18px;
+    }
+
+    #controls {
+        gap: 10px;
+    }
+
+    .control-group label {
+        font-size: 14px;
+    }
+}
+
 
 .overlay {
     position: absolute;

@@ -147,6 +147,27 @@ document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 // Use global pointer move for better tracking even outside canvas
 window.addEventListener('pointermove', mouseMoveHandler, false);
+
+// Touch handling for mobile
+canvas.addEventListener('touchstart', touchHandler, { passive: false });
+canvas.addEventListener('touchmove', touchHandler, { passive: false });
+
+function touchHandler(e) {
+    e.preventDefault(); // Prevent scrolling
+    const rect = canvas.getBoundingClientRect();
+    const scaleX = canvas.width / rect.width;
+    const touch = e.touches[0];
+    const relativeX = (touch.clientX - rect.left) * scaleX;
+
+    if (relativeX > 0 && relativeX < canvas.width) {
+        paddle.x = relativeX - paddle.width / 2;
+
+        // Clamp paddle
+        if (paddle.x < 0) paddle.x = 0;
+        if (paddle.x + paddle.width > canvas.width) paddle.x = canvas.width - paddle.width;
+    }
+}
+
 // Manual launch listeners
 document.addEventListener('keydown', (e) => {
     if (e.code === 'Space') launchBall();
