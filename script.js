@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 
 // Game constants
 const PADDLE_WIDTH = 100; // Slightly smaller for narrower canvas
-const PADDLE_HEIGHT = 15;
+const PADDLE_HEIGHT = window.innerWidth < 600 ? 25 : 15; // Thicker on mobile
 const BALL_RADIUS = 8;
 const BRICK_ROW_COUNT = 8; // More rows for taller canvas
 const BRICK_COLUMN_COUNT = 7; // Fewer columns for narrower canvas
@@ -139,6 +139,36 @@ function initBricks(levelIndex) {
     }
 }
 
+// Mobile Optimization: Hide controls if screen is small
+function checkMobileLayout() {
+    const controls = document.getElementById('controls');
+    if (window.innerWidth < 600) {
+        if (controls) {
+            // Use a class to hide instead of removing to allow toggling back on desktop resize if needed,
+            // but 'display: none !important' via JS style value should work. 
+            // Let's try setting visibility and height too.
+            controls.style.cssText = 'display: none !important; height: 0 !important; visibility: hidden !important;';
+            paddle.height = 25;
+        }
+    } else {
+        if (controls) {
+            controls.style.display = 'flex';
+            controls.style.visibility = 'visible';
+            controls.style.height = 'auto';
+            paddle.height = 15;
+        }
+    }
+}
+
+// Check on load and resize
+window.addEventListener('load', checkMobileLayout);
+window.addEventListener('resize', checkMobileLayout);
+
+// Ensure we run it immediately in case load already fired
+if (document.readyState === 'complete') {
+    checkMobileLayout();
+}
+
 // Input handling
 let rightPressed = false;
 let leftPressed = false;
@@ -147,6 +177,11 @@ document.addEventListener('keydown', keyDownHandler, false);
 document.addEventListener('keyup', keyUpHandler, false);
 // Use global pointer move for better tracking even outside canvas
 window.addEventListener('pointermove', mouseMoveHandler, false);
+
+// PREVENT SCROLLING GLOBALLY
+document.addEventListener('touchmove', function (e) {
+    e.preventDefault();
+}, { passive: false });
 
 // Touch handling for mobile
 canvas.addEventListener('touchstart', touchHandler, { passive: false });

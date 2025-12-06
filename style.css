@@ -8,22 +8,29 @@
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
+html,
 body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Prevent scrolling */
+    position: fixed;
+    /* Lock viewport on iOS */
     background-color: var(--bg-color);
     color: var(--text-color);
     font-family: 'Outfit', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    margin: 0;
-    overflow: auto;
-    /* Allow scrolling if screen is too short */
     background: radial-gradient(circle at center, #111 0%, #000 100%);
     user-select: none;
     -webkit-user-select: none;
     overscroll-behavior: none;
-    /* Prevent swipe navigation on trackpads */
+    /* Prevent swipe navigation */
+    touch-action: none;
+    /* Disable browser handling of gestures */
 }
 
 .game-container {
@@ -61,40 +68,6 @@ canvas {
     max-width: 100%;
     height: auto;
 }
-
-@media (max-width: 600px) {
-    h1 {
-        font-size: 1.8rem;
-    }
-
-    .game-container {
-        width: 100%;
-        padding: 0 10px;
-        box-sizing: border-box;
-    }
-
-    button {
-        padding: 10px 25px;
-        font-size: 16px;
-    }
-
-    .overlay h2 {
-        font-size: 40px;
-    }
-
-    .overlay p {
-        font-size: 18px;
-    }
-
-    #controls {
-        gap: 10px;
-    }
-
-    .control-group label {
-        font-size: 14px;
-    }
-}
-
 
 .overlay {
     position: absolute;
@@ -276,6 +249,7 @@ button:active {
 
 input[type=range] {
     -webkit-appearance: none;
+    appearance: none;
     width: 200px;
     height: 6px;
     background: rgba(255, 255, 255, 0.2);
@@ -303,4 +277,92 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 .shake {
     animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+/* Mobile Media Query - Moved to end for proper override */
+@media (max-width: 600px) {
+    h1 {
+        font-size: 1.2rem;
+        /* Significantly smaller */
+        margin-bottom: 5px;
+        margin-top: 5px;
+        display: none;
+        /* Hide title to save space if needed, or keep very small */
+    }
+
+    .game-container {
+        width: 100%;
+        height: 100%;
+        padding: 5px;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .canvas-wrapper {
+        flex-grow: 1;
+        /* Take up available space */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: none;
+        /* Reduce visual noise */
+        border: none;
+    }
+
+    canvas {
+        max-height: 80vh;
+        /* Give even more space to canvas */
+        object-fit: contain;
+    }
+
+    #scoreBoard {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        gap: 10px;
+        padding: 0 10px;
+        width: 100%;
+        box-sizing: border-box;
+        justify-content: space-between;
+        /* Spread them out */
+    }
+
+    .stat-item {
+        padding: 2px 5px;
+        font-size: 12px;
+        background: none;
+        /* Remove background */
+        border: none;
+        /* Remove border */
+    }
+
+    .stat-item span,
+    .stat-item input {
+        font-size: 14px !important;
+        width: 30px !important;
+        /* Force input small */
+    }
+
+    /* Hide Controls completely on mobile */
+    .game-container #controls,
+    #controls {
+        display: none !important;
+        visibility: hidden !important;
+        height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    button#captureBtn {
+        display: none !important;
+    }
+
+    .overlay h2 {
+        font-size: 40px;
+    }
+
+    .overlay p {
+        font-size: 18px;
+    }
 }
