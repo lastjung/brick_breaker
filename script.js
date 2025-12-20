@@ -3,7 +3,7 @@ const ctx = canvas.getContext('2d');
 
 // Game constants
 const PADDLE_WIDTH = 100; // Slightly smaller for narrower canvas
-const PADDLE_HEIGHT = window.innerWidth < 768 ? 40 : 15; // Thicker on mobile
+const PADDLE_HEIGHT = window.innerWidth < 1280 ? 40 : 15; // Thicker on mobile
 const BALL_RADIUS = 8;
 const BRICK_ROW_COUNT = 8; // More rows for taller canvas
 const BRICK_COLUMN_COUNT = 7; // Fewer columns for narrower canvas
@@ -142,7 +142,7 @@ function initBricks(levelIndex) {
 // Mobile Optimization: Hide controls if screen is small
 function checkMobileLayout() {
     const controls = document.getElementById('controls');
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 1280) {
         if (controls) {
             // Use a class to hide instead of removing to allow toggling back on desktop resize if needed,
             // but 'display: none !important' via JS style value should work. 
