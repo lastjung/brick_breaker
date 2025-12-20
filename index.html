@@ -16,6 +16,11 @@
             <canvas id="gameCanvas" width="600" height="800"></canvas>
             <div id="startHint" class="overlay" style="display: flex; background: rgba(0,0,0,0.4);">
                 <p style="font-size: 24px; color: #fff; text-shadow: 0 0 10px #0ff;">Click or Press Space to Start</p>
+                <p style="font-size: 14px; color: #aaa; margin-top: 10px;">(P or ESC to Pause)</p>
+            </div>
+            <div id="pauseOverlay" class="overlay" style="display: none; background: rgba(0,0,0,0.6);">
+                <h2 style="color: #0ff; text-shadow: 0 0 20px #0ff;">PAUSED</h2>
+                <p style="color: #fff;">Press P or ESC to Resume</p>
             </div>
             <div id="gameOverScreen" class="overlay" style="display: none;">
                 <h2>Game Over</h2>
@@ -29,13 +34,12 @@
             </div>
         </div>
         <div id="scoreBoard">
-            <div class="stat-item">Level: <input type="number" id="levelSelect" min="1" value="1"
-                    style="width: 50px; background: transparent; border: none; color: #fff; font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; text-align: center;">
+            <div class="stat-item">Level: <input type="number" id="levelSelect" min="1" value="1" class="game-input">
             </div>
             <div class="stat-item">Score: <span id="score">0</span></div>
-            <div class="stat-item">Lives: <input type="number" id="livesSelect" min="1" value="3"
-                    style="width: 50px; background: transparent; border: none; color: #fff; font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 700; text-align: center;">
+            <div class="stat-item">Lives: <input type="number" id="livesSelect" min="1" value="3" class="game-input">
             </div>
+            <div class="stat-item">Best: <span id="highScore">0</span></div>
         </div>
         <div id="controls">
             <div class="control-group">
@@ -46,14 +50,22 @@
 
             <div class="control-group">
                 <label for="paddleSpeedSlider">Paddle Speed:</label>
-                <input type="range" id="paddleSpeedSlider" min="10" max="30" value="15" step="1">
-                <span id="paddleSpeedDisplay">15</span>
+                <input type="range" id="paddleSpeedSlider" min="5" max="20" value="10" step="1">
+                <span id="paddleSpeedDisplay">10</span>
             </div>
 
             <div class="control-group">
                 <button id="captureBtn" style="padding: 5px 15px; font-size: 14px; margin-left: 10px;">Capture
                     Mouse</button>
+                <button id="muteBtn" style="padding: 5px 15px; font-size: 14px; margin-left: 10px;">Mute</button>
             </div>
+        </div>
+        <div id="controls-guide">
+            <p><strong>Controls</strong></p>
+            <p>← → : Move Paddle</p>
+            <p>Space : Launch Ball</p>
+            <p>P / ESC : Pause</p>
+            <p>M : Mute/Unmute</p>
         </div>
     </div>
     <script src="script.js"></script>

@@ -31,6 +31,34 @@ body {
     /* Prevent swipe navigation */
     touch-action: none;
     /* Disable browser handling of gestures */
+    background: radial-gradient(circle at center, #111 0%, #000 100%);
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.03) 0%, transparent 50%);
+    transform: translate(-50%, -50%);
+    animation: backgroundPulse 10s infinite alternate ease-in-out;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes backgroundPulse {
+    from {
+        opacity: 0.3;
+        transform: translate(-50%, -50%) scale(0.8);
+    }
+
+    to {
+        opacity: 0.8;
+        transform: translate(-50%, -50%) scale(1.2);
+    }
 }
 
 .game-container {
@@ -177,6 +205,49 @@ button:active {
     font-weight: 700;
     margin-left: 10px;
     text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transition: all 0.3s ease;
+}
+
+.game-input {
+    width: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    color: var(--primary-color);
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: center;
+    margin-left: 5px;
+    outline: none;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.game-input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 10px var(--primary-color);
+}
+
+.game-input::-webkit-inner-spin-button {
+    opacity: 1;
+}
+
+.new-best {
+    color: #f0f !important;
+    text-shadow: 0 0 20px #f0f, 0 0 30px #f0f !important;
+    animation: goldFlare 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes goldFlare {
+    from {
+        color: #f0f;
+        text-shadow: 0 0 10px #f0f;
+    }
+
+    to {
+        color: #fff;
+        text-shadow: 0 0 30px #0ff;
+    }
 }
 
 /* Animations */
@@ -219,6 +290,30 @@ button:active {
 
 .flash-red {
     animation: flashRed 0.6s ease-out;
+}
+
+@keyframes shakeHit {
+
+    0%,
+    100% {
+        transform: translate(0, 0);
+    }
+
+    25% {
+        transform: translate(-2px, 2px);
+    }
+
+    50% {
+        transform: translate(2px, -2px);
+    }
+
+    75% {
+        transform: translate(-1px, 1px);
+    }
+}
+
+.shake-hit {
+    animation: shakeHit 0.2s ease-out;
 }
 
 #controls {
@@ -279,8 +374,46 @@ input[type=range]::-webkit-slider-thumb:hover {
     animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
 }
 
+#controls-guide {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #888;
+    backdrop-filter: blur(10px);
+    z-index: 5;
+    pointer-events: none;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0.6;
+}
+
+#controls-guide:hover {
+    opacity: 1;
+    transform: translateY(-5px);
+}
+
+#controls-guide p {
+    margin: 3px 0;
+}
+
+#controls-guide strong {
+    color: var(--primary-color);
+    display: block;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
 /* Mobile Media Query - Moved to end for proper override */
 @media (max-width: 1280px) {
+    #controls-guide {
+        display: none;
+    }
+
     h1 {
         font-size: 1.2rem;
         /* Significantly smaller */
@@ -339,8 +472,9 @@ input[type=range]::-webkit-slider-thumb:hover {
 
     .stat-item span,
     .stat-item input {
-        font-size: 14px !important;
-        width: 30px !important;
+        font-size: 13px !important;
+        width: 25px !important;
+        margin-left: 2px !important;
         /* Force input small */
     }
 
